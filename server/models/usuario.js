@@ -49,7 +49,6 @@ usuarioSchema.methods.toJSON = function() {
 	delete userObject.password;
 
 	return userObject;
-	
 }
 
 usuarioSchema.plugin(uniqueValidator, {message: '{PATH} debe de ser único'});

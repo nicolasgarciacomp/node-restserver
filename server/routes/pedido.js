@@ -16,7 +16,7 @@ const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 const Pedido = require('../models/pedido.js');
 const app = express();
 
-app.get('/pedido', function(req, res) {
+app.get('/pedidos', function(req, res) {
 	Pedido.find()
 		  .exec((err, pedidos) => {
 		   		if(err) {
@@ -34,6 +34,23 @@ app.get('/pedido', function(req, res) {
 					});
 				});
 		   });
+});
+
+app.get('/pedido/:ref', function(req, res) {
+	let ref = req.params.ref;  
+	 
+	var xhr = new XMLHttpRequest();
+	xhr.withCredentials = true;
+	xhr.addEventListener("readystatechange", function () {
+		if (this.readyState === 4) {
+		console.log(this.responseText);
+		}
+	});
+	xhr.open("GET", `https://api.mobbex.com/2.0/transactions/coupons/${ref}`);
+	xhr.setRequestHeader("x-api-key", "zJ8LFTBX6Ba8D611e9io13fDZAwj0QmKO1Hn1yIj");
+	xhr.setRequestHeader("x-access-token", "d31f0721-2f85-44e7-bcc6-15e19d1a53cc");
+	xhr.setRequestHeader("cache-control", "no-cache");
+	xhr.send();
 });
 
 app.post('/pedido', function(req, res) {
@@ -67,7 +84,8 @@ app.post('/pedido', function(req, res) {
 		"reference": body.reference,
 		"description": body.descripcion,
 		"return_url": body.return_url,
-		"webhook": "https://mobbex.com/sale/webhook?user=1234"
+		"webhook": "https://mobbex.com/sale/webhook?user=1234",
+		"redirect": false
 	});
 	  
 	var xhr = new XMLHttpRequest();

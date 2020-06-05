@@ -1,7 +1,7 @@
 {
-  "name": "07-restserver",
+  "name": "myapp",
   "version": "1.0.0",
-  "description": "",
+  "description": "Pequeña app de pedidos",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -12,8 +12,10 @@
     "bcrypt": "^3.0.2",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.7.6",
     "mongoose-unique-validator": "^2.0.3",
-    "underscore": "^1.9.1"
+    "underscore": "^1.9.1",
+    "xmlhttprequest": "^1.8.0"
   }
 }

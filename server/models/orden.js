@@ -19,7 +19,7 @@ let ordenSchema = new Schema({
 		type: Number,
 		required: [true, 'El total es necesario']
 	},
-	descripcion: {
+	description: {
 		type: String,
 		required: [true, 'La descripcion es necesaria']
 	},

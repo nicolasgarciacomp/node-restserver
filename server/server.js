@@ -31,7 +31,7 @@ mongoose.connect('mongodb://localhost:27017/pedidos', (err) => {
 
 	console.log('Base de datos ONLINE');
 });
- 
+
 app.listen(process.env.PORT, () => {
 	console.log('Escuchando en el puerto: ', process.env.PORT);
 });

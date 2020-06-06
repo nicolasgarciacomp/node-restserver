@@ -23,7 +23,11 @@ let pedidoSchema = new Schema({
 		type: String,
 		required: [true, 'El currency es necesario']
 	},
-	descripcion: {
+	reference: {
+		type: String,
+		required: [true, 'El reference es necesario']
+	},
+	description: {
 		type: String,
 		required: [true, 'La descripcion es necesaria']
 	},
@@ -31,9 +35,13 @@ let pedidoSchema = new Schema({
 		type: String,
 		required: [true, 'El return_url es necesario']
 	},
-	reference: {
+	webhook: {
 		type: String,
-		required: [true, 'El reference es necesario']
+		required: [true, 'El webhook es necesario']
+	},
+	redirect: {
+		type: Boolean,
+		required: [true, 'El redirect es necesario']
 	}
 });
 

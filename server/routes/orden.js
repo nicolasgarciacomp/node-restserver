@@ -40,7 +40,7 @@ app.post('/orden', function(req, res) {
 	let body = req.body;
 	let orden = new Orden({
 		total: body.total,
-		descripcion: body.descripcion,
+		description: body.description,
 		email: body.email
 	});
 
@@ -61,7 +61,7 @@ app.post('/orden', function(req, res) {
 	/***************************************/
     var data = JSON.stringify({
         "total": body.total,
-        "description": body.descripcion,
+        "description": body.description,
         "email": body.email
     });
       
@@ -69,7 +69,7 @@ app.post('/orden', function(req, res) {
     xhr.withCredentials = true;
     
     xhr.addEventListener("readystatechange", function () {
-        if (this.readyState === 4) {
+        if(this.readyState === 4) {
             console.log(this.responseText);
         }
     });

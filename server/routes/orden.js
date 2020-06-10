@@ -12,11 +12,24 @@
 // Require
 const express = require('express');
 const _ = require('underscore');
-const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+//const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+const axios = require('axios');
 const Orden = require('../models/orden.js');
 const app = express();
 
-app.get('/orden', function(req, res) {
+let url = 'https://api.mobbex.com';
+
+const instance = axios.create({
+	headers: {'x-api-key': 'zJ8LFTBX6Ba8D611e9io13fDZAwj0QmKO1Hn1yIj',
+			  'x-access-token': 'd31f0721-2f85-44e7-bcc6-15e19d1a53cc',
+			  'x-lang': 'es',
+			  'Content-Type': 'application/json',
+			  'cache-control': 'no-cache',
+			  'Postman-Token': 'a5b4fd48-3439-4e50-b6d2-64978b0213c4'
+			 }
+});
+
+app.get('/ordenes', function(req, res) {
 	Orden.find()
 		  .exec((err, ordenes) => {
 		   		if(err) {
@@ -26,7 +39,7 @@ app.get('/orden', function(req, res) {
 					});
 				}
 
-				Pedido.count((err, conteo) => {
+				Orden.count((err, conteo) => {
 					res.json({
 						ok: true,
 						ordenes,
@@ -38,11 +51,12 @@ app.get('/orden', function(req, res) {
 
 app.post('/orden', function(req, res) {
 	let body = req.body;
-	let orden = new Orden({
+	let data = {
 		total: body.total,
 		description: body.description,
 		email: body.email
-	});
+	}
+	let orden = new Orden(data);
 
 	orden.save((err, ordenDB) => {
 		if(err) {
@@ -58,8 +72,16 @@ app.post('/orden', function(req, res) {
 		});
 	});
 
-	/***************************************/
-    var data = JSON.stringify({
+	instance.post(`${url}/p/payment_order`, data)
+	.then((res) => {
+	   console.log(res);
+	})
+	.catch((error) => {
+	   console.error(error);
+	});
+
+	/* Se comenta lo realizado con xmlhttprequest */
+    /*var data = JSON.stringify({
         "total": body.total,
         "description": body.description,
         "email": body.email
@@ -82,7 +104,7 @@ app.post('/orden', function(req, res) {
     xhr.setRequestHeader("cache-control", "no-cache");
     xhr.setRequestHeader("Postman-Token", "d6c06149-80b6-45a3-84ee-da0a8ba737a3");
     
-    xhr.send(data);
+    xhr.send(data);*/
 });
 
 module.exports = app;

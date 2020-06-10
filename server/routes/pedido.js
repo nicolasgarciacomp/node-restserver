@@ -82,8 +82,8 @@ app.post('/pedido', function(req, res) {
 		reference: body.reference,
 		description: body.description,
 		return_url: body.return_url,
-		webhook: `127.0.0.1:3000/webhook/${body.reference}`,
-		redirect: false
+		webhook: `localhost:3000/webhook?ref=${body.reference}`,
+		redirect: true
 	}
 	let pedido = new Pedido(data);
 
@@ -140,9 +140,15 @@ app.post('/pedido', function(req, res) {
 	xhr.send(data);*/
 });
 
-app.post('/webhook/:ref', function(req, res) {
-	res.send('POST request to the homepage');
-	console.log('Cambio');
+app.get('/webhook', function(req, res) {
+	res.send('GET Cambio');
+	console.log('GET Cambio');
+});
+
+app.post('/webhook', (req, res) => {  
+	let body = req.body;
+	
+	console.log(body);
 });
 
 module.exports = app;

@@ -11,7 +11,6 @@
 
 // Require
 const express = require('express');
-const _ = require('underscore');
 //const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 const axios = require('axios');
 const Pedido = require('../models/pedido.js');
@@ -82,7 +81,7 @@ app.post('/pedido', function(req, res) {
 		currency: body.currency,
 		reference: body.reference,
 		description: body.description,
-		return_url: body.return_url,
+		return_url: 'localhost:3000/return/zxc',
 		webhook: `localhost:3000/webhook/${body.reference}`,
 		redirect: true,
 		estado: 'Nuevo'

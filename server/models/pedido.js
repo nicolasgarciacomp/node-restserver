@@ -42,6 +42,10 @@ let pedidoSchema = new Schema({
 	redirect: {
 		type: Boolean,
 		required: [true, 'El redirect es necesario']
+	},
+	estado: {
+		type: String,
+		required: false
 	}
 });
 

@@ -51,13 +51,14 @@ app.get('/pedidos', function(req, res) {
 
 app.get('/pedido/:ref', function(req, res) {
 	let ref = req.params.ref;  
+
 	instance.get(`${url}/2.0/transactions/coupons/${ref}`)
-	     .then((res) => {
-			   console.log(res.data);
-		 })
-	     .catch((error) => {
-	     	console.error(error);
-	     });
+	     	.then((res) => {
+				console.log(res.data);
+		 	})
+	     	.catch((error) => {
+	     		console.error(error);
+	     	});
 
 	/* Se comenta lo realizado con xmlhttprequest */
 	/*var xhr = new XMLHttpRequest();
@@ -82,8 +83,9 @@ app.post('/pedido', function(req, res) {
 		reference: body.reference,
 		description: body.description,
 		return_url: body.return_url,
-		webhook: `localhost:3000/webhook?ref=${body.reference}`,
-		redirect: true
+		webhook: `localhost:3000/webhook/${body.reference}`,
+		redirect: true,
+		estado: 'Nuevo'
 	}
 	let pedido = new Pedido(data);
 
@@ -102,12 +104,12 @@ app.post('/pedido', function(req, res) {
 	});
 
 	instance.post(`${url}/p/checkout`, data)
-	     .then((res) => {
-			console.log(res);
-		 })
-		 .catch((error) => {
-			console.error(error);
-		 });
+	     	.then((res) => {
+				console.log(res);
+		 	})
+		 	.catch((error) => {
+				console.error(error);
+		 	});
 
 	/* Se comenta lo realizado con xmlhttprequest */
 	/*var data = JSON.stringify({
@@ -140,15 +142,23 @@ app.post('/pedido', function(req, res) {
 	xhr.send(data);*/
 });
 
-app.get('/webhook', function(req, res) {
-	res.send('GET Cambio');
-	console.log('GET Cambio');
-});
-
-app.post('/webhook', (req, res) => {  
-	let body = req.body;
+app.post('/webhook/:ref', (req, res) => {  
+	let ref = req.params.ref;
 	
-	console.log(body);
+	Pedido.find({'reference': ref})
+		  .exec((err, pedido) => {
+		  		if(err) {
+					return res.status(400).json({
+						ok: false,
+						err
+					});
+				}
+
+				res.json({
+					ok: true,
+					pedido: pedido
+				});
+		   });
 });
 
 module.exports = app;

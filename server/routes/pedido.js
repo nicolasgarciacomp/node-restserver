@@ -83,7 +83,7 @@ app.post('/pedido', function(req, res) {
 		description: body.description,
 		return_url: 'localhost:3000/return/zxc',
 		webhook: `localhost:3000/webhook/${body.reference}`,
-		redirect: false,
+		redirect: true,
 		estado: 'Nuevo'
 	}
 	let pedido = new Pedido(data);

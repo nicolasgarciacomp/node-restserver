@@ -30,34 +30,34 @@ const instance = axios.create({
 
 app.get('/pedidos', function(req, res) {
 	Pedido.find()
-		  .exec((err, pedidos) => {
-		   		if(err) {
-					return res.status(400).json({
-						ok: false,
-						err
-					});
-				}
-
-				Pedido.count((err, conteo) => {
-					res.json({
-						ok: true,
-						pedidos,
-						cuantos: conteo
-					});
+		.exec((err, pedidos) => {
+			if(err) {
+				return res.status(400).json({
+					ok: false,
+					err
 				});
-		   });
+			}
+
+			Pedido.count((err, conteo) => {
+				res.json({
+					ok: true,
+					pedidos,
+					cuantos: conteo
+				});
+			});
+		});
 });
 
 app.get('/pedido/:ref', function(req, res) {
 	let ref = req.params.ref;  
 
 	instance.get(`${url}/2.0/transactions/coupons/${ref}`)
-	     	.then((res) => {
-				console.log(res.data);
-		 	})
-	     	.catch((error) => {
-	     		console.error(error);
-	     	});
+		.then((res) => {
+			console.log(res.data);
+		})
+		.catch((error) => {
+			console.error(error);
+		});
 
 	/* Se comenta lo realizado con xmlhttprequest */
 	/*var xhr = new XMLHttpRequest();
@@ -83,7 +83,7 @@ app.post('/pedido', function(req, res) {
 		description: body.description,
 		return_url: 'localhost:3000/return/zxc',
 		webhook: `localhost:3000/webhook/${body.reference}`,
-		redirect: true,
+		redirect: false,
 		estado: 'Nuevo'
 	}
 	let pedido = new Pedido(data);
@@ -103,12 +103,13 @@ app.post('/pedido', function(req, res) {
 	});
 
 	instance.post(`${url}/p/checkout`, data)
-	     	.then((res) => {
-				console.log(res);
-		 	})
-		 	.catch((error) => {
-				console.error(error);
-		 	});
+		.then((res) => {
+			console.log(res);
+			//console.log(res.data.data['url']);
+		})
+		.catch((error) => {
+			console.error(error);
+		});
 
 	/* Se comenta lo realizado con xmlhttprequest */
 	/*var data = JSON.stringify({
@@ -145,19 +146,19 @@ app.post('/webhook/:ref', (req, res) => {
 	let ref = req.params.ref;
 	
 	Pedido.find({'reference': ref})
-		  .exec((err, pedido) => {
-		  		if(err) {
-					return res.status(400).json({
-						ok: false,
-						err
-					});
-				}
-
-				res.json({
-					ok: true,
-					pedido: pedido
+		.exec((err, pedido) => {
+			if(err) {
+				return res.status(400).json({
+					ok: false,
+					err
 				});
-		   });
+			}
+
+			res.json({
+				ok: true,
+				pedido: pedido
+			});
+		});
 });
 
 module.exports = app;

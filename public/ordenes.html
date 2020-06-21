@@ -16,33 +16,35 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
-            <a class="nav-item nav-link" href="nuevo.html">Nuevo</a>
-            <a class="nav-item nav-link" href="estado.html">Estado</a>
             <a class="nav-item nav-link" href="pedidos.html">Pedidos</a>
+            <a class="nav-item nav-link" href="ordenes.html">Pagos</a>
           </div>
         </div>
     </nav>
     <table>
         <tr>
             <td>
-                <form method="post" action="http://localhost:3000/pedido">
+                <form method="post" action="http://localhost:3000/orden">
+                    <h1>Nueva Orden de Pago</h1>
+                    <hr>
                     <div class="form-group col-3">
                         <label>Total</label>
                         <input type="text" class="form-control" id="total" name="total" required>
                     </div>
                     <div class="form-group col-3">
-                        <label>Currency</label>
-                        <input type="text" class="form-control" id="currency" name="currency" required>
-                    </div>
-                    <div class="form-group col-3">
-                        <label>Reference</label>
-                        <input type="text" class="form-control" id="reference" name="reference" required>
-                    </div>
-                    <div class="form-group col-3">
                         <label>Description</label>
                         <input type="text" class="form-control" id="description" name="description" required>
                     </div>
+                    <div class="form-group col-3">
+                        <label>Email</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
                     <button type="submit" class="btn btn-primary" formtarget="_blank">Generar</button>
+                </form>
+            </td>
+            <td>
+                <form method="get" action="http://localhost:3000/ordenes">
+                    <button type="submit" class="btn btn-primary" formtarget="_blank">Ver Ordenes de Pago</button>
                 </form>
             </td>
         </tr>

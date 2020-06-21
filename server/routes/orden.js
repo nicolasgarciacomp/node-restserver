@@ -30,22 +30,22 @@ const instance = axios.create({
 
 app.get('/ordenes', function(req, res) {
 	Orden.find()
-		  .exec((err, ordenes) => {
-		   		if(err) {
-					return res.status(400).json({
-						ok: false,
-						err
-					});
-				}
-
-				Orden.count((err, conteo) => {
-					res.json({
-						ok: true,
-						ordenes,
-						cuantas: conteo
-					});
+		.exec((err, ordenes) => {
+			if(err) {
+				return res.status(400).json({
+					ok: false,
+					err
 				});
-		   });
+			}
+
+			Orden.count((err, conteo) => {
+				res.json({
+					ok: true,
+					ordenes,
+					cuantas: conteo
+				});
+			});
+		});
 });
 
 app.post('/orden', function(req, res) {
@@ -72,12 +72,12 @@ app.post('/orden', function(req, res) {
 	});
 
 	instance.post(`${url}/p/payment_order`, data)
-	.then((res) => {
-	   console.log(res);
-	})
-	.catch((error) => {
-	   console.error(error);
-	});
+		.then((res) => {
+			console.log(res);
+		})
+		.catch((error) => {
+			console.error(error);
+		});
 
 	/* Se comenta lo realizado con xmlhttprequest */
     /*var data = JSON.stringify({
